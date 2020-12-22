@@ -1,3 +1,5 @@
+FROM package-list as package-list
+
 FROM lfedge/eve-alpine:9cf408427ca05cd7795e92ca827cc678e3c295cc as kernel-build
 
 RUN apk --no-cache add \
@@ -33,6 +35,9 @@ RUN apk --no-cache add \
     elfutils-libelf=0.168-r2 \
     elfutils-dev=0.168-r2
 
+
+COPY --from=package-list /gen-package-list /tmp
+RUN /tmp/gen-package-list
 
 # Download acrn-kernel
 ENV KERNEL_VERSION acrn-2019w39.3-150000p

@@ -1,0 +1,4 @@
+#!/bin/bash -epux
+
+cat /etc/alpine-release
+apk list

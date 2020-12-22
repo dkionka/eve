@@ -546,6 +546,7 @@ ifneq ($(BUILD),local)
                       -t $@ build-tools/src/scripts > /dev/null
 	@echo "$@ docker container is ready to use"
 endif
+	$(QUIET)cd build-tools/package-list && docker build -t package-list .
 	: $@: Succeeded
 
 #
