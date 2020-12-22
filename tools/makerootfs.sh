@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 # Usage:
 #
 #     ./makerootfs.sh <image.yml> <output rootfs image>  [<fs>]
@@ -19,3 +19,4 @@ fi
 
 : > "$IMAGE"
 linuxkit build -o - "$YMLFILE" | docker run -i --rm -v /dev:/dev --privileged -v "$IMAGE:/rootfs.img" "${MKROOTFS_TAG}"
+ls -l "$IMAGE"

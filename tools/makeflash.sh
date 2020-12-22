@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -x
 # Usage:
 #
 #      ./makeflash.sh [-C size] <input dir> <output.img> [partitions]
@@ -21,3 +21,4 @@ IMAGE="$(cd "$(dirname "$2")" && pwd)/$(basename "$2")"
 shift 2
 
 docker run --rm -v "$SOURCE:/parts" -v "$IMAGE:/output.img" "$MKFLASH_TAG" /output.img "$@"
+ls -l $IMAGE
