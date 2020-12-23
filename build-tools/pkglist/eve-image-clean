@@ -1,0 +1,13 @@
+#!/bin/bash -epux
+
+ECHO=
+ECHO=echo
+
+find_eve_images()
+{
+	docker image ls |
+		sed -n 's,^\([^ ]*/eve-[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+}
+
+find_eve_images |
+	xargs $ECHO docker image rm

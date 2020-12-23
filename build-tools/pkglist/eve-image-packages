@@ -1,0 +1,27 @@
+#!/usr/bin/env bash -epux
+
+find_eve_images()
+{
+	docker image ls |
+		grep -v lfedge/eve-kvm-tools |
+		sed -n 's,^\([^ ]*/eve-[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+}
+
+find_eve_images |
+	while read image; do
+		rel=$(docker run --rm $image /bin/cat /etc/alpine-release | grep '^[0-9]') < /dev/null || true
+		if [ -n "$rel" ]; then
+			packages=$(docker run --rm $image /sbin/apk -v info |
+				while read package; do
+					case "$package" in
+						libssl* )
+							echo $package
+							;;
+					esac
+				done ||
+				true)
+			echo image=$image, release=$rel, packages: $packages
+		fi
+	done
+
+echo $0: Succeeded 1>&2
