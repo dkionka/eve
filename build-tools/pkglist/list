@@ -1,0 +1,44 @@
+image=lfedge/eve-alpine:e308c3ab4360639365e6084a75727ce5bf488adb, release=3.9.6, packages: libssl1.1-1.1.1d-r2
+image=lfedge/eve-guacd:35116e6330af849132f5d5f36b8662c6bd3f1b1d, release=3.8.5, packages: libssl1.0-1.0.2u-r0
+image=lfedge/eve-lisp:e9963e1525e2926bcc8d3dddf32217627b53dc1a, release=3.11.6, packages: libssl1.1-1.1.1g-r0
+image=lfedge/eve-mkrootfs-ext4:17ec5bda58c7f6d3717b88d3da55df4516cdb6f3, release=3.6.2, packages:
+image=lfedge/eve-mkrootfs-squash:70b1faff4c3b512c91a1b7157fbddabbd41992f0, release=3.6.2, packages:
+image=lfedge/eve-newlog:0dec59a626f04a4c3cf422d9848895e910241f33, release=3.8.5, packages:
+image=lfedge/eve-pillar:bedb3bb5eb21899c64802dfdbe3878095bc32954, release=3.8.5, packages: libssl1.0-1.0.2u-r0
+image=lfedge/eve-storage-init:8836eba2971161d39abc257bed7568bfff314c57, release=3.12.2, packages: libssl1.1-1.1.1g-r0
+image=lfedge/eve-vtpm:3e5d78417366df54ed9737971d5cf5742d24baf5, release=3.9.6, packages: libssl1.1-1.1.1g-r0
+image=lfedge/eve-watchdog:c2fb67abd7dd7e3c90633f171c76a8dbfef7d9c0, release=3.8.5, packages:
+image=lfedge/eve-wlan:8f907bbab96b72aa215c860868198a230903c493, release=3.8.5, packages:
+image=lfedge/eve-wwan:b965c9a213f70969ff43db464b3b4b09dfb22b84, release=3.12.0, packages: libssl1.1-1.1.1g-r0
+image=lfedge/eve-xen-tools:783cd6df8b34f2991bb8c239d771d54341746d21, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/alpine/cache:latest, release=3.9.6, packages: libssl1.1-1.1.1d-r2
+image=pkglist/alpine/mirror:latest, release=3.9.6, packages: libssl1.1-1.1.1g-r0
+image=pkglist/debug/lshw-build:latest, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/debug/musl-build:latest, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/dnsmasq/build:latest, release=3.8.0, packages:
+image=pkglist/dom0-ztools/zfs:latest, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/fw/build:latest, release=3.13.0_alpha20201218, packages: libssl1.1-1.1.1i-r0
+image=pkglist/gpt-tools/build:latest, release=3.8.0, packages: libssl1.0-1.0.2o-r2
+image=pkglist/grub/grub-build:latest, release=3.6.2, packages:
+image=pkglist/guacd/build:latest, release=3.8.5, packages: libssl1.0-1.0.2u-r0
+image=pkglist/ipxe/build:latest, release=3.9.6, packages: libssl1.1-1.1.1d-r2
+image=pkglist/k3s/build:latest, release=3.12.0, packages:
+image=pkglist/k3s/cache:latest, release=3.9.6, packages: libssl1.1-1.1.1d-r2
+image=pkglist/kvm-tools/build:latest, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/lisp/build:latest, release=3.9.3, packages: libssl1.1-1.1.1b-r1
+image=pkglist/lisp/lisp:latest, release=3.11.7, packages: libssl1.1-1.1.1i-r0
+image=pkglist/mkconf/build:latest, release=3.7.0, packages:
+image=pkglist/mkimage-iso-efi/make-img:latest, release=3.6.2, packages:
+image=pkglist/mkrootfs-ext4/make-img:latest, release=3.6.2, packages:
+image=pkglist/mkrootfs-squash/make-img:latest, release=3.6.2, packages:
+image=pkglist/newlog/build:latest, release=3.12.1, packages: libssl1.1-1.1.1g-r0
+image=pkglist/pillar/build:latest, release=3.12.1, packages: libssl1.1-1.1.1g-r0
+image=pkglist/pillar/fscrypt-build:latest, release=3.9.6, packages: libssl1.1-1.1.1d-r2
+image=pkglist/rngd/mirror:latest, release=3.8.0, packages:
+image=pkglist/strongswan/build:latest, release=3.8.0, packages: libssl1.0-1.0.2o-r2
+image=pkglist/u-boot/build:latest, release=3.9.4, packages: libssl1.1-1.1.1b-r1
+image=pkglist/vtpm/build:latest, release=3.9.4, packages: libssl1.1-1.1.1d-r2
+image=pkglist/watchdog/watchdog-build:latest, release=3.8.0, packages:
+image=pkglist/wlan/build:latest, release=3.8.5, packages:
+image=pkglist/wwan/build:latest, release=3.12.3, packages: libssl1.1-1.1.1i-r0
+image=pkglist/xen-tools/runx-build:latest, release=3.9.4, packages: libssl1.1-1.1.1d-r2

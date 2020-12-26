@@ -1,0 +1,46 @@
+#!/usr/bin/env bash -epux
+
+cname=extract$$
+
+apk_command="/sbin/apk -v info"
+
+find_eve_images()
+{
+	docker image ls |
+		sed -n 's,^\(pkglist/[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+	docker image ls |
+		grep -v lfedge/eve-kvm-tools |
+		grep -v .-amd64 |
+		sed -n 's,^\([^ ]*/eve-[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+}
+
+filter_packages()
+{
+	docker run --rm $image $apk_command |
+		while read package; do
+			case "$package" in
+				libssl* )
+					echo $package
+					;;
+			esac
+		done ||
+		true
+}
+
+find_eve_images |
+	sort |
+	while read image; do
+		rm -f alpine-release
+		if docker container create --name $cname $image $apk_command 1>&2; then
+			docker container cp $cname:/etc/alpine-release . || true
+		fi
+		docker container rm -f $cname 1>&2
+		rel=$(cat alpine-release) || true
+		rm -f alpine-release
+		if [ -n "$rel" ]; then
+			packages=$(filter_packages)
+			echo image=$image, release=$rel, packages: $packages
+		fi
+	done
+
+echo $0: Succeeded 1>&2

@@ -1,0 +1,28 @@
+#!/bin/bash -epux
+
+# only build kernels if run with:
+# env FULL_BUILD=X ./docker-build-alpine
+KERNEL=kernel
+test -z "${FULL_BUILD:-}" || KERNEL=dummy-value
+
+cd ../..
+
+for dockerfile in pkg/*/Dockerfile; do
+	case $dockerfile in
+		*/qrexec-dom0/* | \
+		*/qrexec-lib/* )
+			continue # skip because COPY command fails
+			;;
+	esac
+	sed -n 's/[Ff][Rr][Oo][Mm] .*alpine.*[ 	][Aa][Ss] //p' $dockerfile |
+		grep -v $KERNEL |
+		while read target; do
+			(
+				cd $(dirname $dockerfile)
+				pkg=$(basename $PWD)
+				docker build -t pkglist/$pkg/$target --target $target .
+			)
+		done
+done
+
+echo $0: Succeeded

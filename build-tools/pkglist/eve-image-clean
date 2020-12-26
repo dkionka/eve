@@ -1,0 +1,17 @@
+#!/bin/bash -epux
+
+# only removes if run with:
+# env FULL_CLEAN=X ./eve-image-clean
+ECHO=echo
+test -z "${FULL_CLEAN:-}" || ECHO=
+
+find_eve_images()
+{
+	docker image ls |
+		sed -n 's,^\(pkglist/[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+	docker image ls |
+		sed -n 's,^\([^ ]*/eve-[^ ]*\) *\([^ ]*\).*,\1:\2,p'
+}
+
+find_eve_images |
+	xargs $ECHO docker image rm

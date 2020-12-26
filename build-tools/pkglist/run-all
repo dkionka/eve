@@ -1,0 +1,35 @@
+#!/bin/bash -epux
+
+# full:
+FULL_CLEAN=X
+FULL_BUILD=X
+# fast:
+FULL_CLEAN=
+FULL_BUILD=
+
+# very noisy script, so save output to file
+OUTPUT=list
+
+# must run in this subdir
+# Mac does not allow: $(readlink -f $0)
+cd $(dirname $0)
+
+# start fresh
+env FULL_CLEAN=$FULL_CLEAN ./eve-image-clean
+docker image ls | grep eve-     || true
+docker image ls | grep pkglist/ || true
+
+# generate real eve images
+(
+	cd ../..
+	make V=1 -f build-tools/pkglist/Makefile pkgs
+)
+
+# generate intermediate alpine stages
+env FULL_BUILD=$FULL_BUILD ./docker-build-alpine
+
+# final list of packages
+./eve-image-packages > $OUTPUT
+cat -n $OUTPUT
+
+echo $0: Succeeded
