@@ -1,0 +1,28 @@
+#!/bin/bash -epux
+
+DEF_OS=alpine
+BLD_DIR=tmp-build
+
+apk_command="/sbin/apk -v info"
+
+OS=${1:-$DEF_OS}
+
+rm -rf $BLD_DIR
+mkdir $BLD_DIR
+
+# generate Dockerfile with latest versions of all packages
+(
+	echo "FROM $OS"
+	echo
+	echo "RUN apk update"
+	echo
+	echo "RUN apk add --no-cache --force-broken-world \\"
+	./find-apk-packages | sed 's/$/ \\/'
+	echo "|| echo Ignore missing packages"
+) > $BLD_DIR/Dockerfile
+
+docker build -t $OS-up-to-date $BLD_DIR
+
+docker run --rm $OS-up-to-date $apk_command | sort
+
+echo $0: Succeeded 1>&2

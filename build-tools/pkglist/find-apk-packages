@@ -1,0 +1,30 @@
+#!/bin/bash -epux
+
+TOP=../..
+if (( $# )); then
+	TOP="$*"
+else
+	cd $(dirname $0)
+fi
+
+# big filter, explained line by line:
+# - find all Dockerfiles
+# - combine all \ continuation lines
+# - replace tabs with space
+# - get only run apk add lines
+# - strip out add command for packages only
+# - split package names to separate lines
+# - strip =version to get package name only
+# - strip add options and paths
+# - unique sort of package names
+find $TOP -name 'Docker*' |
+	xargs perl -p -e 's/\\\n//' |
+	tr '\t' ' ' |
+	grep -i 'Run *apk .*add' |
+	sed 's/.* add //' |
+	xargs -n1 |
+	sed 's/=[0-9].*//' |
+	grep '^[a-z]' |
+	sort -u
+
+echo $0: Succeeded 1>&2
