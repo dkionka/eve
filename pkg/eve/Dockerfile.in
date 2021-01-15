@@ -1,4 +1,4 @@
-FROM alpine:3.9.4 as tools
+FROM alpine:3.13.0 as tools
 RUN mkdir -p /out/etc/apk /out/boot && cp -r /etc/apk/* /out/etc/apk/
 RUN apk add --no-cache --initdb -p /out qemu-img=3.1.0-r3 tar=1.32-r0
 # hadolint ignore=DL3006
