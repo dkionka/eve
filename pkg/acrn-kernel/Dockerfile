@@ -1,4 +1,4 @@
-FROM lfedge/eve-alpine:9cf408427ca05cd7795e92ca827cc678e3c295cc as kernel-build
+FROM lfedge/eve-alpine:5.16 as kernel-build
 
 RUN apk --no-cache add \
     argp-standalone=1.3-r3 \
