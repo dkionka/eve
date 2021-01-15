@@ -5,20 +5,20 @@ updates:
   - package-ecosystem: "docker"
     directory: "/pkg/acrn"
     schedule:
-      interval: "daily"
+      interval: "monthly"
   - package-ecosystem: "docker"
     directory: "/pkg/acrn-kernel"
     schedule:
-      interval: "daily"
+      interval: "monthly"
   - package-ecosystem: "docker"
     directory: "/pkg/alpine"
     schedule:
-      interval: "daily"
+      interval: "monthly"
   - package-ecosystem: "docker"
     directory: "/pkg/eve"
     schedule:
-      interval: "daily"
+      interval: "monthly"
   - package-ecosystem: "docker"
     directory: "/pkg/xen"
     schedule:
-      interval: "daily"
+      interval: "monthly"
