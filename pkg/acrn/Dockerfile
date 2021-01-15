@@ -1,4 +1,4 @@
-FROM lfedge/eve-alpine:5.16 as kernel-build
+FROM lfedge/eve-alpine:5.19.0 as kernel-build
 
 RUN apk add --no-cache \
     gcc=8.3.0-r0 \
