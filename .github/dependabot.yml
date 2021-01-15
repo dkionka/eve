@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # Enable version updates for Docker
+  # how to look in /pkg/*...
+  - package-ecosystem: "docker"
+    directory: "/pkg/acrn"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/pkg/acrn-kernel"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/pkg/alpine"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/pkg/eve"
+    schedule:
+      interval: "daily"
+  - package-ecosystem: "docker"
+    directory: "/pkg/xen"
+    schedule:
+      interval: "daily"
