@@ -18,7 +18,7 @@ RUN apk add \
     gnupg \
     installkernel \
     kmod \
-    libelf-dev \
+    libelf \
     libressl-dev \
     linux-headers \
     ncurses-dev \
