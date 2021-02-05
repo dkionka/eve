@@ -189,13 +189,16 @@ DOCKER_ALL_PROXY:=--build-arg all_proxy=$(ALL_PROXY)
 endif
 
 # use "make V=1" for verbose logging
+BASH_X :=
 DASH_V :=
 QUIET := @
 SET_X := :
 ifeq ($(V),1)
+  BASH_X := bash -eux
   DASH_V := -v
   QUIET :=
   SET_X := set -x
+  export DEBUG = 1
 endif
 
 DOCKER_UNPACK= _() { C=`docker create $$1 fake` ; shift ; docker export $$C | tar -xf - "$$@" ; docker rm $$C ; } ; _
@@ -426,7 +429,7 @@ $(SSH_KEY):
 	mv $@.pub $(CONF_DIR)/authorized_keys
 
 $(CONFIG_IMG): $(CONF_FILES) | $(INSTALLER)
-	./tools/makeconfig.sh $@ "$(ROOTFS_VERSION)" $(CONF_FILES)
+	$(BASH_X) ./tools/makeconfig.sh $@ "$(ROOTFS_VERSION)" $(CONF_FILES)
 	$(QUIET): $@: Succeeded
 
 $(PERSIST_IMG): | $(INSTALLER)
@@ -444,11 +447,11 @@ $(ROOTFS_IMG): $(ROOTFS)-$(HV).img
 	$(QUIET): $@: Succeeded
 
 $(LIVE).raw: $(BOOT_PART) $(EFI_PART) $(ROOTFS_IMG) $(CONFIG_IMG) $(PERSIST_IMG) | $(INSTALLER)
-	./tools/makeflash.sh -C 350 $| $@ $(PART_SPEC)
+	$(BASH_X) ./tools/makeflash.sh -C 350 $| $@ $(PART_SPEC)
 	$(QUIET): $@: Succeeded
 
 $(INSTALLER).raw: $(EFI_PART) $(ROOTFS_IMG) $(INITRD_IMG) $(CONFIG_IMG) $(PERSIST_IMG) | $(INSTALLER)
-	./tools/makeflash.sh -C 350 $| $@ "conf_win installer inventory_win"
+	$(BASH_X) ./tools/makeflash.sh -C 350 $| $@ "conf_win installer inventory_win"
 	$(QUIET): $@: Succeeded
 
 $(INSTALLER).iso: $(EFI_PART) $(ROOTFS_IMG) $(INITRD_IMG) $(CONFIG_IMG) $(PERSIST_IMG) | $(INSTALLER)
@@ -609,11 +612,11 @@ images/rootfs-%.yml.in: images/rootfs.yml.in FORCE
 $(ROOTFS_FULL_NAME)-adam-kvm-$(ZARCH).$(ROOTFS_FORMAT): $(ROOTFS_FULL_NAME)-kvm-adam-$(ZARCH).$(ROOTFS_FORMAT)
 $(ROOTFS_FULL_NAME)-kvm-adam-$(ZARCH).$(ROOTFS_FORMAT): images/rootfs-%.yml $(SSH_KEY) | $(INSTALLER)
 	$(QUIET): $@: Begin
-	./tools/makerootfs.sh $< $@ $(ROOTFS_FORMAT) $(ZARCH)
+	$(BASH_X) ./tools/makerootfs.sh $< $@ $(ROOTFS_FORMAT) $(ZARCH)
 	$(QUIET): $@: Succeeded
 $(ROOTFS_FULL_NAME)-%-$(ZARCH).$(ROOTFS_FORMAT): images/rootfs-%.yml | $(INSTALLER)
 	$(QUIET): $@: Begin
-	./tools/makerootfs.sh $< $@ $(ROOTFS_FORMAT) $(ZARCH)
+	$(BASH_X) ./tools/makerootfs.sh $< $@ $(ROOTFS_FORMAT) $(ZARCH)
 	@echo "size of $@ is $$(wc -c < "$@")B"
 	@[ $$(wc -c < "$@") -gt $$(( 250 * 1024 * 1024 )) ] && \
           echo "ERROR: size of $@ is greater than 250MB (bigger than allocated partition)" && exit 1 || :
